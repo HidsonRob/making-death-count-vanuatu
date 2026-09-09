@@ -1,0 +1,13 @@
+{
+  "name": "making-death-count",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Desktop app for the Making Death Count – Vanuatu dashboard",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "dependencies": {
+    "electron": "^37.2.0"
+  }
+}

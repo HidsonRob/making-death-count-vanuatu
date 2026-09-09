@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "vu.gov.vnso.makingdeathcount",
+      "sha256_cert_fingerprints": [
+        "65:0A:0A:13:7B:1D:CC:9E:D4:7A:5E:6F:16:18:43:7C:09:DF:DE:4F:9E:04:2D:88:C3:4B:A7:30:CF:DB:D4:2F"
+      ]
+    }
+  }
+]

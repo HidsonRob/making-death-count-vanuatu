@@ -4,5 +4,19 @@ Thumbs.db
 .env
 .env.*
 node_modules/
+desktop/node_modules/
 .vscode/
 .idea/
+
+# Android / TWA build artifacts
+*.keystore
+*.jks
+key.properties
+android-twa/.gradle/
+android-twa/app/build/
+android-twa/build/
+android-twa/local.properties
+android-twa/*.apk
+dist/*.aab
+dist/*.apk
+!dist/making-death-count.apk

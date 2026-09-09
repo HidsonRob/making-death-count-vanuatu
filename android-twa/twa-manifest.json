@@ -1,0 +1,51 @@
+{
+  "packageId": "vu.gov.vnso.makingdeathcount",
+  "host": "vanuatu-national-statistics-office.github.io",
+  "name": "Making Death Count",
+  "launcherName": "Death Count",
+  "display": "standalone",
+  "themeColor": "#0A3D62",
+  "themeColorDark": "#0A3D62",
+  "navigationColor": "#000000",
+  "navigationColorDark": "#000000",
+  "navigationDividerColor": "#000000",
+  "navigationDividerColorDark": "#000000",
+  "backgroundColor": "#FFFFFF",
+  "enableNotifications": false,
+  "startUrl": "/making-death-count-vanuatu/",
+  "iconUrl": "https://vanuatu-national-statistics-office.github.io/making-death-count-vanuatu/assets/icons/icon-512.png",
+  "maskableIconUrl": "https://vanuatu-national-statistics-office.github.io/making-death-count-vanuatu/assets/icons/icon-512.png",
+  "splashScreenFadeOutDuration": 300,
+  "signingKey": {
+    "path": "./android.keystore",
+    "alias": "android"
+  },
+  "appVersion": "1",
+  "appVersionName": "1",
+  "appVersionCode": 1,
+  "shortcuts": [],
+  "generatorApp": "bubblewrap-cli",
+  "webManifestUrl": "https://vanuatu-national-statistics-office.github.io/making-death-count-vanuatu/manifest.webmanifest",
+  "fallbackType": "customtabs",
+  "features": {},
+  "alphaDependencies": {
+    "enabled": false
+  },
+  "enableSiteSettingsShortcut": true,
+  "isChromeOSOnly": false,
+  "isMetaQuest": false,
+  "fullScopeUrl": "https://vanuatu-national-statistics-office.github.io/making-death-count-vanuatu/",
+  "minSdkVersion": 21,
+  "orientation": "default",
+  "fingerprints": [
+    {
+      "name": "debug-keystore",
+      "value": "65:0A:0A:13:7B:1D:CC:9E:D4:7A:5E:6F:16:18:43:7C:09:DF:DE:4F:9E:04:2D:88:C3:4B:A7:30:CF:DB:D4:2F"
+    }
+  ],
+  "additionalTrustedOrigins": [],
+  "retainedBundles": [],
+  "protocolHandlers": [],
+  "fileHandlers": [],
+  "launchHandlerClientMode": ""
+}
