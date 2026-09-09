@@ -1,23 +1,27 @@
 /* Making Death Count — Vanuatu mortality dashboard */
 
 :root {
-  --navy: #1a3a6b;
-  --navy-deep: #0f2a4f;
-  --sky: #e8f2fb;
-  --sky-mid: #c5dff5;
+  --navy: #0a3d62;
+  --navy-deep: #072a45;
+  --sky: #e7f4f6;
+  --sky-mid: #b7d9de;
   --red: #e53935;
   --red-soft: #fde8e7;
   --green: #43a047;
   --green-soft: #e8f5e9;
-  --yellow: #f9a825;
+  --yellow: #e8a217;
   --yellow-soft: #fff8e1;
-  --cyan: #00acc1;
+  --cyan: #00a3a1;
+  --teal: #3c978d;
+  --gold: #ffc131;
   --ink: #1e293b;
-  --muted: #64748b;
+  --muted: #5a6e7d;
   --white: #ffffff;
   --radius: 14px;
   --max: 960px;
-  --shadow-soft: 0 1px 0 rgba(15, 42, 79, 0.04);
+  --shadow-soft: 0 1px 0 rgba(10, 61, 98, 0.05);
+  --edge: 1px solid rgba(10, 61, 98, 0.14);
+  --edge-teal: 1px solid rgba(0, 163, 161, 0.3);
 }
 
 * {
@@ -26,13 +30,22 @@
   padding: 0;
 }
 
+html {
+  min-height: 100%;
+  background-color: #ffffff;
+  overflow-x: clip;
+}
+
 body {
   font-family: "Source Sans 3", system-ui, sans-serif;
   color: var(--ink);
-  background:
-    radial-gradient(ellipse 80% 50% at 100% -10%, #d4ecf8 0%, transparent 55%),
-    radial-gradient(ellipse 60% 40% at 0% 20%, #e8f5e9 0%, transparent 45%),
-    linear-gradient(180deg, #f4f9fc 0%, #f7fafc 40%, #eef5f9 100%);
+  background-color: #ffffff;
+  background-image:
+    linear-gradient(rgba(107, 74, 43, 0.10), rgba(107, 74, 43, 0.10)),
+    linear-gradient(rgba(255, 255, 255, 0.88), rgba(255, 255, 255, 0.88)),
+    url("assets/geometric-pattern-bg.jpg");
+  background-repeat: no-repeat, no-repeat, repeat;
+  background-size: 100% 100%, 100% 100%, 400px 400px;
   line-height: 1.45;
   min-height: 100vh;
 }
@@ -40,7 +53,35 @@ body {
 .page {
   max-width: var(--max);
   margin: 0 auto;
-  padding: 1.75rem 1.25rem 0;
+  padding: 1.75rem 1.25rem 0.4rem;
+}
+
+/* Teal–navy wash over download bar + header only; fades out before the tab menu */
+.top-fade {
+  position: relative;
+  isolation: isolate;
+  display: flow-root;
+  margin-top: -1.75rem;
+  padding-top: 1.75rem;
+}
+
+.top-fade::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 100vw;
+  transform: translateX(-50%);
+  background: linear-gradient(
+    to bottom,
+    rgba(60, 151, 141, 0.28) 0%,
+    rgba(0, 163, 161, 0.18) 42%,
+    rgba(41, 97, 142, 0.08) 72%,
+    transparent 100%
+  );
+  pointer-events: none;
+  z-index: -1;
 }
 
 /* —— Top bar —— */
@@ -59,15 +100,17 @@ body {
   color: white;
   text-decoration: none;
   border-radius: 10px;
+  border: 1px solid rgba(0, 163, 161, 0.45);
   font-family: Figtree, sans-serif;
   font-weight: 700;
   font-size: 0.86rem;
   box-shadow: var(--shadow-soft);
-  transition: background 0.15s ease, transform 0.15s ease;
+  transition: background 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
 }
 
 .download-btn:hover {
-  background: var(--navy-deep);
+  background: #0c4f6a;
+  border-color: var(--cyan);
   transform: translateY(-1px);
 }
 
@@ -87,7 +130,20 @@ body {
   grid-template-columns: auto 1fr;
   gap: 1.1rem;
   align-items: center;
-  margin-bottom: 1.1rem;
+  margin-bottom: 1.25rem;
+  padding-bottom: 1.2rem;
+  position: relative;
+}
+
+.header::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 3px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--gold) 0%, var(--cyan) 46%, var(--navy) 100%);
 }
 
 .logo {
@@ -124,7 +180,7 @@ body {
   border-radius: 999px;
   font-size: 0.82rem;
   font-weight: 500;
-  border: 1px solid var(--sky-mid);
+  border: var(--edge-teal);
 }
 
 @media (max-width: 560px) {
@@ -145,7 +201,7 @@ body {
   gap: 0.4rem;
   margin-bottom: 1rem;
   background: var(--white);
-  border: 1px solid var(--sky-mid);
+  border: var(--edge-teal);
   border-radius: 12px;
   padding: 0.4rem;
   box-shadow: var(--shadow-soft);
@@ -223,7 +279,7 @@ body {
 }
 
 .stat:nth-child(3) {
-  background: linear-gradient(145deg, #ffca28 0%, var(--yellow) 100%);
+  background: linear-gradient(145deg, var(--gold) 0%, var(--yellow) 100%);
   color: #3d2e00;
 }
 
@@ -250,11 +306,11 @@ body {
 
 /* —— Panels —— */
 .panel {
-  background: var(--sky);
+  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
   border-radius: 18px;
   padding: 1.1rem 1.15rem 1.2rem;
   margin-bottom: 1rem;
-  border: 1px solid rgba(197, 223, 245, 0.9);
+  border: var(--edge-teal);
 }
 
 .panel-head {
@@ -283,7 +339,7 @@ body {
 }
 
 .chip {
-  border: 1px solid var(--sky-mid);
+  border: var(--edge);
   background: var(--white);
   color: var(--navy);
   font-family: Figtree, sans-serif;
@@ -319,7 +375,7 @@ body {
 
 /* —— Cause bars —— */
 .cause {
-  background: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.88);
   border: 1px solid transparent;
   border-radius: 12px;
   padding: 0.7rem 0.75rem;
@@ -358,7 +414,7 @@ body {
 
 .bar-track {
   height: 12px;
-  background: #dbeaf7;
+  background: #d4e8ec;
   border-radius: 6px;
   overflow: hidden;
 }
@@ -436,7 +492,7 @@ body {
 
 .place {
   background: var(--white);
-  border: 2px solid transparent;
+  border: 2px solid rgba(0, 163, 161, 0.18);
   border-radius: var(--radius);
   padding: 0.95rem 0.8rem;
   text-align: center;
@@ -479,7 +535,7 @@ body {
   padding: 0.9rem 1rem;
   font-size: 0.9rem;
   color: var(--navy-deep);
-  border: 1px solid var(--sky-mid);
+  border: var(--edge-teal);
 }
 
 /* —— Charts —— */
@@ -488,7 +544,7 @@ body {
   border-radius: 12px;
   padding: 0.85rem 0.75rem 0.5rem;
   position: relative;
-  border: 1px solid var(--sky-mid);
+  border: var(--edge-teal);
 }
 
 .chart-svg {
@@ -551,7 +607,7 @@ body {
   background: var(--white);
   border-radius: 12px;
   padding: 0.9rem;
-  border: 1px solid var(--sky-mid);
+  border: var(--edge-teal);
 }
 
 .sex-card h3 {
@@ -581,7 +637,7 @@ body {
 .mini-track {
   grid-column: 1 / -1;
   height: 8px;
-  background: #e8eef5;
+  background: #dce8ec;
   border-radius: 4px;
   overflow: hidden;
 }
@@ -615,7 +671,7 @@ body {
   padding: 0.95rem 0.85rem;
   font-size: 0.86rem;
   text-align: center;
-  border: 1px solid var(--sky-mid);
+  border: var(--edge);
 }
 
 .message strong {
@@ -632,13 +688,13 @@ body {
 .note {
   display: flex;
   gap: 0.7rem;
-  background: var(--sky);
+  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
   border-radius: var(--radius);
   padding: 0.9rem 1rem;
   margin-bottom: 0.85rem;
   font-size: 0.84rem;
   color: var(--navy-deep);
-  border: 1px solid var(--sky-mid);
+  border: var(--edge-teal);
 }
 
 .note-icon {
@@ -646,7 +702,7 @@ body {
   width: 28px;
   height: 28px;
   border-radius: 50%;
-  background: #29b6f6;
+  background: var(--cyan);
   color: white;
   display: grid;
   place-items: center;
@@ -668,9 +724,11 @@ body {
   justify-content: center;
   align-items: center;
   gap: 1.25rem 2rem;
-  margin: 0 0 1.35rem;
-  padding: 0 0.5rem;
-  background: transparent;
+  margin: 0.15rem 0 1.5rem;
+  padding: 1.15rem 1.25rem;
+  background: #ffffff;
+  border: var(--edge-teal);
+  border-radius: 16px;
 }
 
 .footer-logos img {
@@ -684,6 +742,7 @@ body {
 @media (max-width: 560px) {
   .footer-logos {
     gap: 0.9rem 1.25rem;
+    padding: 0.95rem 0.9rem;
   }
 
   .footer-logos img {
@@ -692,11 +751,16 @@ body {
 }
 
 .pacific-border {
-  height: 28px;
+  height: 42px;
   width: 100%;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='28' viewBox='0 0 120 28'%3E%3Cpolygon fill='%23e53935' points='0,28 15,0 30,28'/%3E%3Cpolygon fill='%23f9a825' points='20,28 35,4 50,28'/%3E%3Cpolygon fill='%2343a047' points='40,28 55,0 70,28'/%3E%3Cpolygon fill='%231a3a6b' points='60,28 75,6 90,28'/%3E%3Cpolygon fill='%23e53935' points='80,28 95,0 110,28'/%3E%3Cpolygon fill='%23f9a825' points='100,28 115,5 130,28'/%3E%3C/svg%3E");
-  background-repeat: repeat-x;
-  background-size: 120px 28px;
+  background-color: #0a3d62;
+  background-image:
+    linear-gradient(90deg, var(--gold) 0%, var(--cyan) 50%, var(--navy) 100%),
+    linear-gradient(#072a45, #072a45),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='32' viewBox='0 0 140 32'%3E%3Crect width='140' height='32' fill='%230a3d62'/%3E%3Cpolygon fill='%23e53935' points='0,0 10,10 20,0'/%3E%3Cpolygon fill='%23ffc131' points='20,0 30,10 40,0'/%3E%3Cpolygon fill='%2343a047' points='40,0 50,10 60,0'/%3E%3Cpolygon fill='%23111111' points='60,0 70,10 80,0'/%3E%3Cpolygon fill='%23e53935' points='80,0 90,10 100,0'/%3E%3Cpolygon fill='%23ffc131' points='100,0 110,10 120,0'/%3E%3Cpolygon fill='%2343a047' points='120,0 130,10 140,0'/%3E%3Cpolygon fill='%23e53935' points='0,32 17.5,8 35,32'/%3E%3Cpolygon fill='%23ffc131' points='28,32 45.5,6 63,32'/%3E%3Cpolygon fill='%2343a047' points='56,32 73.5,8 91,32'/%3E%3Cpolygon fill='%23111111' points='84,32 101.5,6 119,32'/%3E%3Cpolygon fill='%23e53935' points='112,32 129.5,8 147,32'/%3E%3C/svg%3E");
+  background-repeat: no-repeat, no-repeat, repeat-x;
+  background-size: 100% 4px, 100% 2px, 140px 32px;
+  background-position: 0 0, 0 4px, 0 6px;
 }
 
 @media (prefers-reduced-motion: reduce) {
