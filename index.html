@@ -3,593 +3,556 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Making Death Count — Vanuatu Causes of Death 2023</title>
+  <title>Making Death Count — Vanuatu Causes of Death Analysis (January–December 2023)</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <style>
-    :root {
-      --navy: #1a3a6b;
-      --navy-deep: #0f2a4f;
-      --sky: #e8f2fb;
-      --sky-mid: #c5dff5;
-      --red: #e53935;
-      --red-soft: #fde8e7;
-      --green: #43a047;
-      --green-soft: #e8f5e9;
-      --yellow: #f9a825;
-      --yellow-soft: #fff8e1;
-      --cyan: #00acc1;
-      --cyan-soft: #e0f7fa;
-      --ink: #1e293b;
-      --muted: #64748b;
-      --white: #ffffff;
-      --radius: 14px;
-      --max: 920px;
-    }
-
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-
-    body {
-      font-family: "Source Sans 3", system-ui, sans-serif;
-      color: var(--ink);
-      background:
-        radial-gradient(ellipse 80% 50% at 100% -10%, #d4ecf8 0%, transparent 55%),
-        radial-gradient(ellipse 60% 40% at 0% 20%, #e8f5e9 0%, transparent 45%),
-        #f7fafc;
-      line-height: 1.45;
-      min-height: 100vh;
-    }
-
-    .page {
-      max-width: var(--max);
-      margin: 0 auto;
-      padding: 1.75rem 1.25rem 0;
-    }
-
-    /* —— Header —— */
-    .header {
-      display: grid;
-      grid-template-columns: auto 1fr;
-      gap: 1.1rem;
-      align-items: center;
-      margin-bottom: 1.25rem;
-      animation: rise 0.6s ease-out both;
-    }
-
-    .logo {
-      width: clamp(88px, 18vw, 128px);
-      height: auto;
-      display: block;
-      border-radius: 12px;
-      background: #000;
-      flex-shrink: 0;
-    }
-
-    .header-text { min-width: 0; }
-
-    .brand {
-      font-family: Figtree, sans-serif;
-      font-weight: 800;
-      font-size: clamp(1.85rem, 4.5vw, 2.55rem);
-      color: var(--navy);
-      letter-spacing: -0.03em;
-      line-height: 1.1;
-    }
-
-    .subtitle {
-      font-family: Figtree, sans-serif;
-      font-weight: 600;
-      font-size: clamp(0.95rem, 2.2vw, 1.15rem);
-      color: var(--navy);
-      margin-top: 0.35rem;
-    }
-
-    .tag {
-      display: inline-block;
-      margin-top: 0.65rem;
-      padding: 0.35rem 0.9rem;
-      background: var(--sky);
-      color: var(--navy);
-      border-radius: 999px;
-      font-size: 0.85rem;
-      font-weight: 500;
-    }
-
-    @media (max-width: 560px) {
-      .header {
-        grid-template-columns: 1fr;
-        justify-items: start;
-        gap: 0.85rem;
-      }
-      .logo { width: 104px; }
-    }
-
-    /* —— Stat row —— */
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 0.85rem;
-      margin-bottom: 1.15rem;
-    }
-
-    .stat {
-      border-radius: var(--radius);
-      padding: 1.1rem 1rem 1rem;
-      color: var(--white);
-      display: flex;
-      flex-direction: column;
-      gap: 0.45rem;
-      min-height: 118px;
-      animation: rise 0.55s ease-out both;
-    }
-
-    .stat:nth-child(1) { background: var(--red); animation-delay: 0.08s; }
-    .stat:nth-child(2) { background: var(--green); animation-delay: 0.16s; }
-    .stat:nth-child(3) { background: var(--yellow); animation-delay: 0.24s; color: #3d2e00; }
-
-    .stat-icon {
-      width: 36px;
-      height: 36px;
-      opacity: 0.95;
-    }
-
-    .stat-value {
-      font-family: Figtree, sans-serif;
-      font-weight: 800;
-      font-size: clamp(1.15rem, 2.8vw, 1.45rem);
-      letter-spacing: -0.02em;
-      line-height: 1.2;
-    }
-
-    .stat-note {
-      font-size: 0.72rem;
-      opacity: 0.9;
-      line-height: 1.35;
-      font-weight: 500;
-    }
-
-    @media (max-width: 640px) {
-      .stats { grid-template-columns: 1fr; }
-      .stat { min-height: auto; flex-direction: row; align-items: center; gap: 0.85rem; }
-      .stat-body { flex: 1; }
-    }
-
-    /* —— Panels —— */
-    .panel {
-      background: var(--sky);
-      border-radius: 18px;
-      padding: 1.15rem 1.2rem 1.25rem;
-      margin-bottom: 1rem;
-      animation: rise 0.55s ease-out both;
-      animation-delay: 0.3s;
-    }
-
-    .panel-title {
-      font-family: Figtree, sans-serif;
-      font-weight: 700;
-      font-size: 1.05rem;
-      color: var(--navy);
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      margin-bottom: 0.95rem;
-    }
-
-    .panel-title svg { flex-shrink: 0; }
-
-    /* Causes */
-    .causes-layout {
-      display: grid;
-      grid-template-columns: 1fr minmax(160px, 200px);
-      gap: 1rem;
-      align-items: stretch;
-    }
-
-    @media (max-width: 640px) {
-      .causes-layout { grid-template-columns: 1fr; }
-    }
-
-    .cause {
-      margin-bottom: 0.85rem;
-    }
-
-    .cause:last-child { margin-bottom: 0; }
-
-    .cause-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      gap: 0.5rem;
-      margin-bottom: 0.3rem;
-      font-size: 0.88rem;
-      font-weight: 600;
-      color: var(--navy-deep);
-    }
-
-    .cause-meta {
-      white-space: nowrap;
-      font-weight: 700;
-      font-size: 0.82rem;
-    }
-
-    .bar-track {
-      height: 12px;
-      background: rgba(255, 255, 255, 0.75);
-      border-radius: 6px;
-      overflow: hidden;
-    }
-
-    .bar-fill {
-      height: 100%;
-      border-radius: 6px;
-      width: 0;
-      animation: fillBar 1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-    }
-
-    .callout {
-      background: var(--red-soft);
-      border-radius: var(--radius);
-      padding: 1rem 0.95rem;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      gap: 0.55rem;
-      color: var(--navy-deep);
-      font-size: 0.88rem;
-      font-weight: 600;
-      line-height: 1.35;
-    }
-
-    .callout strong {
-      color: var(--red);
-      font-weight: 800;
-    }
-
-    /* Place of death */
-    .places {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 0.75rem;
-    }
-
-    .place {
-      background: var(--white);
-      border-radius: var(--radius);
-      padding: 1rem 0.85rem;
-      text-align: center;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.35rem;
-      animation: rise 0.5s ease-out both;
-    }
-
-    .place:nth-child(1) { animation-delay: 0.35s; }
-    .place:nth-child(2) { animation-delay: 0.42s; }
-    .place:nth-child(3) { animation-delay: 0.49s; }
-
-    .place-label {
-      font-family: Figtree, sans-serif;
-      font-weight: 700;
-      color: var(--navy);
-      font-size: 0.95rem;
-    }
-
-    .place-value {
-      font-family: Figtree, sans-serif;
-      font-weight: 800;
-      font-size: 1.15rem;
-      color: var(--navy-deep);
-    }
-
-    @media (max-width: 560px) {
-      .places { grid-template-columns: 1fr; }
-      .place { flex-direction: row; text-align: left; gap: 0.85rem; padding: 0.85rem 1rem; }
-      .place-text { display: flex; flex-direction: column; gap: 0.1rem; }
-    }
-
-    /* Key messages */
-    .messages {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 0.85rem;
-    }
-
-    .message {
-      background: var(--white);
-      border-radius: var(--radius);
-      padding: 1rem 0.9rem;
-      text-align: center;
-      font-size: 0.86rem;
-      font-weight: 500;
-      color: var(--ink);
-      line-height: 1.4;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.55rem;
-      animation: rise 0.5s ease-out both;
-    }
-
-    .message:nth-child(1) { animation-delay: 0.4s; }
-    .message:nth-child(2) { animation-delay: 0.48s; }
-    .message:nth-child(3) { animation-delay: 0.56s; }
-
-    .message strong { font-weight: 700; color: var(--navy-deep); }
-
-    @media (max-width: 640px) {
-      .messages { grid-template-columns: 1fr; }
-      .message { flex-direction: row; text-align: left; gap: 0.85rem; }
-      .message svg { flex-shrink: 0; }
-    }
-
-    /* Note */
-    .note {
-      display: flex;
-      gap: 0.75rem;
-      align-items: flex-start;
-      background: var(--sky);
-      border-radius: var(--radius);
-      padding: 0.95rem 1.05rem;
-      margin-bottom: 0.85rem;
-      font-size: 0.84rem;
-      color: var(--navy-deep);
-      line-height: 1.45;
-      animation: rise 0.5s ease-out both;
-      animation-delay: 0.55s;
-    }
-
-    .note-icon {
-      flex-shrink: 0;
-      width: 28px;
-      height: 28px;
-      border-radius: 50%;
-      background: #29b6f6;
-      color: white;
-      display: grid;
-      place-items: center;
-      font-family: Figtree, sans-serif;
-      font-weight: 800;
-      font-size: 0.95rem;
-    }
-
-    .source {
-      font-size: 0.75rem;
-      color: var(--muted);
-      text-align: center;
-      margin-bottom: 1.25rem;
-      padding: 0 0.5rem;
-      animation: rise 0.5s ease-out both;
-      animation-delay: 0.6s;
-    }
-
-    /* Pacific border */
-    .pacific-border {
-      height: 28px;
-      width: 100%;
-      margin-top: 0.5rem;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='28' viewBox='0 0 120 28'%3E%3Cpolygon fill='%23e53935' points='0,28 15,0 30,28'/%3E%3Cpolygon fill='%23f9a825' points='20,28 35,4 50,28'/%3E%3Cpolygon fill='%2343a047' points='40,28 55,0 70,28'/%3E%3Cpolygon fill='%231a3a6b' points='60,28 75,6 90,28'/%3E%3Cpolygon fill='%23e53935' points='80,28 95,0 110,28'/%3E%3Cpolygon fill='%23f9a825' points='100,28 115,5 130,28'/%3E%3C/svg%3E");
-      background-repeat: repeat-x;
-      background-size: 120px 28px;
-    }
-
-    @keyframes rise {
-      from { opacity: 0; transform: translateY(12px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes fillBar {
-      to { width: var(--w); }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-      }
-      .bar-fill { width: var(--w); }
-    }
-  </style>
+  <link rel="stylesheet" href="index.css" />
 </head>
 <body>
   <div class="page">
+    <div class="top-bar">
+      <a
+        class="download-btn"
+        href="public/Vanuatu_Making_Death_Count_Brief_2023.pdf"
+        download="Vanuatu_Making_Death_Count_Brief_2023.pdf"
+      >
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M12 4v12m0 0l-4-4m4 4l4-4M5 20h14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Download PDF
+      </a>
+    </div>
+
     <header class="header">
-      <img
-        class="logo"
-        src="assets/vbos-logo.png"
-        alt="Vanuatu Bureau of Statistics"
-        width="128"
-        height="128"
-      />
-      <div class="header-text">
+      <img class="logo" src="assets/vbos-logo.png" alt="Vanuatu Bureau of Statistics" width="120" height="120" />
+      <div>
         <h1 class="brand">Making Death Count</h1>
-        <p class="subtitle">Vanuatu: Causes of Death Analysis (Jan–Dec 2023)</p>
-        <span class="tag">Simple overview from the 2023 mortality dataset</span>
+        <p class="subtitle">Vanuatu: Causes of Death Analysis (January–December 2023)</p>
+        <span class="tag">Interactive overview from the RCS mortality brief</span>
       </div>
     </header>
 
-    <section class="stats" aria-label="Summary statistics">
-      <article class="stat">
-        <svg class="stat-icon" viewBox="0 0 40 40" fill="none" aria-hidden="true">
-          <rect x="8" y="6" width="24" height="28" rx="3" fill="white" fill-opacity="0.25" stroke="white" stroke-width="2"/>
-          <path d="M14 14h12M14 20h12M14 26h8" stroke="white" stroke-width="2" stroke-linecap="round"/>
-        </svg>
-        <div class="stat-body">
+    <nav class="tabs" role="tablist" aria-label="Dashboard views">
+      <button class="tab" role="tab" id="tab-overview" aria-selected="true" aria-controls="view-overview" data-view="overview">Overview</button>
+      <button class="tab" role="tab" id="tab-causes" aria-selected="false" aria-controls="view-causes" data-view="causes">Causes</button>
+      <button class="tab" role="tab" id="tab-sex" aria-selected="false" aria-controls="view-sex" data-view="sex">By sex</button>
+      <button class="tab" role="tab" id="tab-monthly" aria-selected="false" aria-controls="view-monthly" data-view="monthly">Monthly</button>
+      <button class="tab" role="tab" id="tab-place" aria-selected="false" aria-controls="view-place" data-view="place">Place</button>
+    </nav>
+
+    <!-- OVERVIEW -->
+    <section class="view active" id="view-overview" role="tabpanel" aria-labelledby="tab-overview">
+      <div class="stats" aria-label="Summary statistics">
+        <article class="stat">
           <p class="stat-value">484 deaths analysed</p>
-        </div>
-      </article>
-      <article class="stat">
-        <svg class="stat-icon" viewBox="0 0 40 40" fill="none" aria-hidden="true">
-          <rect x="8" y="6" width="24" height="28" rx="3" fill="white" fill-opacity="0.25" stroke="white" stroke-width="2"/>
-          <path d="M14 14h12M14 20h12M14 26h8" stroke="white" stroke-width="2" stroke-linecap="round"/>
-        </svg>
-        <div class="stat-body">
+        </article>
+        <article class="stat">
           <p class="stat-value">517 records submitted</p>
           <p class="stat-note">Includes 33 stillbirths removed from analysis</p>
-        </div>
-      </article>
-      <article class="stat">
-        <svg class="stat-icon" viewBox="0 0 40 40" fill="none" aria-hidden="true">
-          <circle cx="14" cy="14" r="5" fill="#3d2e00" fill-opacity="0.35"/>
-          <circle cx="26" cy="14" r="5" fill="#3d2e00" fill-opacity="0.35"/>
-          <circle cx="20" cy="18" r="5" fill="#3d2e00" fill-opacity="0.55"/>
-          <ellipse cx="14" cy="28" rx="7" ry="5" fill="#3d2e00" fill-opacity="0.35"/>
-          <ellipse cx="26" cy="28" rx="7" ry="5" fill="#3d2e00" fill-opacity="0.35"/>
-          <ellipse cx="20" cy="30" rx="8" ry="5" fill="#3d2e00" fill-opacity="0.55"/>
-        </svg>
-        <div class="stat-body">
+        </article>
+        <article class="stat">
           <p class="stat-value">20.7% of expected annual deaths</p>
-          <p class="stat-note">Data covers deaths recorded through Vanuatu National Hospital</p>
-        </div>
-      </article>
-    </section>
+          <p class="stat-note">Based on ~2,327 expected deaths (2020 census CDR 7.8 per 1,000)</p>
+        </article>
+      </div>
 
-    <section class="panel" aria-labelledby="causes-title">
-      <h2 class="panel-title" id="causes-title">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-          <path d="M3 12h4l2-5 4 10 2-5h6" stroke="#1a3a6b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-        Top Causes of Death
-      </h2>
-      <div class="causes-layout">
-        <div class="causes-list" role="list">
-          <div class="cause" role="listitem">
-            <div class="cause-head">
-              <span>Circulatory diseases</span>
-              <span class="cause-meta">125 (25.8%)</span>
-            </div>
-            <div class="bar-track"><div class="bar-fill" style="--w:100%;background:var(--red);animation-delay:0.35s"></div></div>
-          </div>
-          <div class="cause" role="listitem">
-            <div class="cause-head">
-              <span>Endocrine, nutritional &amp; metabolic diseases</span>
-              <span class="cause-meta">83 (17.1%)</span>
-            </div>
-            <div class="bar-track"><div class="bar-fill" style="--w:66.4%;background:var(--green);animation-delay:0.45s"></div></div>
-          </div>
-          <div class="cause" role="listitem">
-            <div class="cause-head">
-              <span>Neoplasms</span>
-              <span class="cause-meta">62 (12.8%)</span>
-            </div>
-            <div class="bar-track"><div class="bar-fill" style="--w:49.6%;background:var(--yellow);animation-delay:0.55s"></div></div>
-          </div>
-          <div class="cause" role="listitem">
-            <div class="cause-head">
-              <span>Ill-defined causes</span>
-              <span class="cause-meta">47 (9.7%)</span>
-            </div>
-            <div class="bar-track"><div class="bar-fill" style="--w:37.6%;background:var(--cyan);animation-delay:0.65s"></div></div>
-          </div>
+      <div class="panel">
+        <div class="panel-head">
+          <h2 class="panel-title">Leading causes at a glance</h2>
+          <button class="chip" type="button" data-goto="causes">Explore all causes</button>
         </div>
-        <aside class="callout">
-          <svg width="36" height="36" viewBox="0 0 40 40" fill="none" aria-hidden="true">
-            <rect x="6" y="22" width="6" height="12" rx="1" fill="#e53935"/>
-            <rect x="15" y="14" width="6" height="20" rx="1" fill="#e53935" opacity="0.75"/>
-            <rect x="24" y="8" width="6" height="26" rx="1" fill="#e53935" opacity="0.5"/>
-          </svg>
-          <p>Top 10 causes accounted for <strong>459 deaths (94.8%)</strong>.</p>
-        </aside>
+        <div id="overview-causes"></div>
+        <p class="hint" style="margin-top:0.7rem;margin-bottom:0">Click a cause for more detail on the Causes tab.</p>
+      </div>
+
+      <div class="panel">
+        <h2 class="panel-title" style="margin-bottom:0.85rem">Key messages</h2>
+        <div class="messages">
+          <article class="message">Non-communicable diseases were the main contributor to mortality.</article>
+          <article class="message">Injuries were the smallest contributor: <strong>14 deaths (2.9%)</strong>.</article>
+          <article class="message">Under-1 and under-5 deaths were mainly linked to perinatal conditions.</article>
+        </div>
       </div>
     </section>
 
-    <section class="panel" aria-labelledby="place-title" style="animation-delay:0.38s">
-      <h2 class="panel-title" id="place-title">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-          <path d="M12 21s7-5.5 7-11a7 7 0 10-14 0c0 5.5 7 11 7 11z" stroke="#1a3a6b" stroke-width="2"/>
-          <circle cx="12" cy="10" r="2.5" fill="#1a3a6b"/>
-        </svg>
-        Place of Death
-      </h2>
-      <div class="places">
-        <article class="place">
-          <svg width="40" height="40" viewBox="0 0 48 48" fill="none" aria-hidden="true">
-            <rect x="10" y="14" width="28" height="26" rx="2" fill="#29b6f6"/>
-            <rect x="20" y="8" width="8" height="8" fill="#0288d1"/>
-            <path d="M22 20h4v4h4v4h-4v4h-4v-4h-4v-4h4z" fill="white"/>
-          </svg>
-          <div class="place-text">
-            <p class="place-label">Hospital</p>
-            <p class="place-value">253 (52.3%)</p>
+    <!-- CAUSES -->
+    <section class="view" id="view-causes" role="tabpanel" aria-labelledby="tab-causes" hidden>
+      <div class="panel">
+        <div class="panel-head">
+          <h2 class="panel-title">Top causes of death (ICD-10 chapter)</h2>
+          <div class="controls" role="group" aria-label="Cause list depth">
+            <button class="chip active" type="button" data-cause-limit="4" aria-pressed="true">Top 4</button>
+            <button class="chip" type="button" data-cause-limit="10" aria-pressed="false">Top 10</button>
+            <button class="chip" type="button" data-cause-limit="all" aria-pressed="false">All</button>
           </div>
-        </article>
-        <article class="place">
-          <svg width="40" height="40" viewBox="0 0 48 48" fill="none" aria-hidden="true">
-            <path d="M8 24 L24 10 L40 24 V40 H8 Z" fill="#ef5350"/>
-            <rect x="20" y="28" width="8" height="12" fill="#fff3e0"/>
-            <rect x="12" y="26" width="8" height="8" fill="#ffe082"/>
-            <rect x="28" y="26" width="8" height="8" fill="#ffe082"/>
-          </svg>
-          <div class="place-text">
-            <p class="place-label">Home</p>
-            <p class="place-value">130 (26.9%)</p>
-          </div>
-        </article>
-        <article class="place">
-          <svg width="40" height="40" viewBox="0 0 48 48" fill="none" aria-hidden="true">
-            <circle cx="16" cy="16" r="5" fill="#29b6f6"/>
-            <circle cx="32" cy="16" r="5" fill="#29b6f6"/>
-            <circle cx="24" cy="20" r="5" fill="#0288d1"/>
-            <ellipse cx="16" cy="32" rx="8" ry="6" fill="#29b6f6"/>
-            <ellipse cx="32" cy="32" rx="8" ry="6" fill="#29b6f6"/>
-            <ellipse cx="24" cy="34" rx="9" ry="6" fill="#0288d1"/>
-          </svg>
-          <div class="place-text">
-            <p class="place-label">Other</p>
-            <p class="place-value">101 (20.9%)</p>
-          </div>
-        </article>
+        </div>
+        <p class="hint">Click a cause to expand subcategory detail from the source report.</p>
+        <div class="grid-2">
+          <div id="causes-list"></div>
+          <aside class="callout" id="causes-callout">
+            Top 10 causes accounted for <strong>459 deaths (94.8%)</strong> of 484 analysed deaths.
+          </aside>
+        </div>
       </div>
     </section>
 
-    <section class="panel" aria-labelledby="msg-title" style="animation-delay:0.45s">
-      <h2 class="panel-title" id="msg-title">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-          <circle cx="12" cy="12" r="9" stroke="#1a3a6b" stroke-width="2"/>
-          <path d="M12 10v6M12 7.5v.5" stroke="#1a3a6b" stroke-width="2" stroke-linecap="round"/>
-        </svg>
-        Key Messages
-      </h2>
-      <div class="messages">
-        <article class="message">
-          <svg width="36" height="36" viewBox="0 0 40 40" fill="none" aria-hidden="true">
-            <path d="M20 34s-12-7.5-12-16a7 7 0 0112-4.9A7 7 0 0132 18c0 8.5-12 16-12 16z" fill="#e53935"/>
-          </svg>
-          <p>Non-communicable diseases were the main contributor to mortality.</p>
-        </article>
-        <article class="message">
-          <svg width="36" height="36" viewBox="0 0 40 40" fill="none" aria-hidden="true">
-            <circle cx="20" cy="8" r="4" fill="#43a047"/>
-            <path d="M14 16h12l-2 8h-8l-2-8z" fill="#66bb6a"/>
-            <path d="M16 24l-4 10M24 24l4 10M12 18l-6 4M28 18l6 4" stroke="#2e7d32" stroke-width="2" stroke-linecap="round"/>
-          </svg>
-          <p>Injuries were the smallest contributor: <strong>14 deaths (2.9%)</strong>.</p>
-        </article>
-        <article class="message">
-          <svg width="36" height="36" viewBox="0 0 40 40" fill="none" aria-hidden="true">
-            <circle cx="20" cy="14" r="7" fill="#f9a825"/>
-            <ellipse cx="20" cy="30" rx="11" ry="8" fill="#ffca28"/>
-            <circle cx="17" cy="13" r="1.2" fill="#5d4037"/>
-            <circle cx="23" cy="13" r="1.2" fill="#5d4037"/>
-            <path d="M17.5 17c1.2 1.2 3.8 1.2 5 0" stroke="#5d4037" stroke-width="1.2" stroke-linecap="round"/>
-          </svg>
-          <p>Under-1 and under-5 deaths were mainly linked to perinatal conditions.</p>
-        </article>
+    <!-- SEX -->
+    <section class="view" id="view-sex" role="tabpanel" aria-labelledby="tab-sex" hidden>
+      <div class="panel">
+        <div class="panel-head">
+          <h2 class="panel-title">Top 5 causes by sex</h2>
+          <div class="controls" role="group" aria-label="Sex filter">
+            <button class="chip active" type="button" data-sex="both" aria-pressed="true">Both</button>
+            <button class="chip" type="button" data-sex="male" aria-pressed="false">Male</button>
+            <button class="chip" type="button" data-sex="female" aria-pressed="false">Female</button>
+          </div>
+        </div>
+        <div class="sex-cols" id="sex-cols"></div>
+      </div>
+    </section>
+
+    <!-- MONTHLY -->
+    <section class="view" id="view-monthly" role="tabpanel" aria-labelledby="tab-monthly" hidden>
+      <div class="panel">
+        <div class="panel-head">
+          <h2 class="panel-title">Deaths by month (2023)</h2>
+          <p class="hint" style="margin:0" id="month-summary">Hover or tap bars for counts</p>
+        </div>
+        <div class="chart-wrap" id="month-chart-wrap">
+          <div class="tooltip" id="month-tooltip" role="tooltip"></div>
+          <svg class="chart-svg" id="month-chart" viewBox="0 0 640 260" role="img" aria-label="Bar chart of deaths by month"></svg>
+        </div>
+        <p class="hint" style="margin-top:0.75rem;margin-bottom:0">Peak: April (61). Lowest: December (24). Pattern may reflect seasonal mortality, delayed registration, or reporting variation.</p>
+      </div>
+    </section>
+
+    <!-- PLACE -->
+    <section class="view" id="view-place" role="tabpanel" aria-labelledby="tab-place" hidden>
+      <div class="panel">
+        <h2 class="panel-title" style="margin-bottom:0.85rem">Place of death</h2>
+        <p class="hint">Select a place to highlight its share of recorded deaths.</p>
+        <div class="places" id="places"></div>
+        <div class="detail-box" id="place-detail" aria-live="polite"></div>
       </div>
     </section>
 
     <div class="note" role="note">
       <span class="note-icon" aria-hidden="true">i</span>
-      <p><strong>Important:</strong> This dataset is not a national total. It includes deaths recorded through Vanuatu National Hospital and mainly reflects Port Vila and surrounding areas.</p>
+      <p><strong>Important:</strong> This dataset includes only deaths recorded through Vanuatu National Hospital and primarily covers Port Vila and surrounding areas. It represents an estimated 20.7% of expected annual deaths and should not be treated as a national total.</p>
     </div>
 
     <p class="source">
-      Source: Making Death Count – Vanuatu: Causes of Death Analysis from the Pacific Regional Cause of Death Coding Service, SPC, 2024.
+      Source: Making Death Count – Vanuatu: Causes of Death Analysis from the Pacific Regional Cause of Death Coding Service (January–December 2023). Data submitted by the Vanuatu Bureau of Statistics (VBOS) to the Pacific Regional Cause of Death Coding Service (RCS). © Pacific Community (SPC) 2026.
     </p>
   </div>
   <div class="pacific-border" aria-hidden="true"></div>
+
+  <script>
+    const DATA = {
+      total: 484,
+      colors: ["#e53935", "#43a047", "#f9a825", "#00acc1", "#1a3a6b", "#8e24aa", "#fb8c00", "#3949ab", "#00897b", "#6d4c41", "#78909c"],
+      causes: [
+        {
+          name: "Diseases of the circulatory system",
+          code: "I00–I99",
+          deaths: 125,
+          pct: 25.8,
+          detail: [
+            { name: "Ischaemic heart diseases (I20–I25)", deaths: 59, share: "47.2% of chapter" },
+            { name: "Cerebrovascular diseases (I60–I69)", deaths: 28, share: "22.4% of chapter" },
+            { name: "Hypertensive diseases (I10–I15)", deaths: 23, share: "18.4% of chapter" },
+            { name: "Other forms of heart disease (I30–I52)", deaths: 10, share: "8.0% of chapter" },
+            { name: "Chronic rheumatic heart diseases (I05–I09)", deaths: 5, share: "4.0% of chapter" }
+          ]
+        },
+        {
+          name: "Endocrine, nutritional and metabolic diseases",
+          code: "E00–E90",
+          deaths: 83,
+          pct: 17.1,
+          detail: [
+            { name: "Diabetes mellitus (E10–E14)", deaths: 71, share: "85.5% of chapter" },
+            { name: "Metabolic disorders (E70–E90)", deaths: 7, share: "8.4% of chapter" },
+            { name: "Malnutrition (E40–E46)", deaths: 4, share: "4.8% of chapter" },
+            { name: "Disorders of thyroid gland (E00–E07)", deaths: 1, share: "1.2% of chapter" }
+          ]
+        },
+        {
+          name: "Neoplasms",
+          code: "C00–D48",
+          deaths: 62,
+          pct: 12.8,
+          detail: [
+            { name: "Female genital organs (C51–C58)", deaths: 13, share: "21.0% of chapter" },
+            { name: "Breast (C50)", deaths: 13, share: "21.0% of chapter" },
+            { name: "Digestive organs (C15–C26)", deaths: 12, share: "19.4% of chapter" },
+            { name: "Ill-defined / secondary / unspecified (C76–C80)", deaths: 8, share: "12.9% of chapter" }
+          ]
+        },
+        {
+          name: "Ill-defined causes",
+          code: "R00–R99",
+          deaths: 47,
+          pct: 9.7,
+          detail: [
+            { name: "Ill-defined and unknown causes (R95–R99)", deaths: 40, share: "85.1% of chapter" },
+            { name: "General symptoms and signs (R50–R69)", deaths: 5, share: "10.6% of chapter" },
+            { name: "Circulatory/respiratory signs (R00–R09)", deaths: 1, share: "2.1% of chapter" },
+            { name: "Cognition/perception signs (R40–R46)", deaths: 1, share: "2.1% of chapter" }
+          ]
+        },
+        { name: "Certain infectious and parasitic diseases", code: "A00–B99", deaths: 45, pct: 9.3, detail: [
+          { name: "Other bacterial diseases (A30–A49)", deaths: 26, share: "57.8% of chapter" },
+          { name: "Viral hepatitis (B15–B19)", deaths: 6, share: "13.3% of chapter" },
+          { name: "Tuberculosis (A15–A19)", deaths: 5, share: "11.1% of chapter" },
+          { name: "Intestinal infectious diseases (A00–A09)", deaths: 5, share: "11.1% of chapter" }
+        ]},
+        { name: "Diseases of the respiratory system", code: "J00–J99", deaths: 31, pct: 6.4, detail: [
+          { name: "Chronic lower respiratory diseases (J40–J47)", deaths: 16, share: "51.6% of chapter" },
+          { name: "Influenza and pneumonia (J09–J18)", deaths: 9, share: "29.0% of chapter" }
+        ]},
+        { name: "Diseases of the genitourinary system", code: "N00–N99", deaths: 24, pct: 5.0, detail: [
+          { name: "Renal failure (N17–N19)", deaths: 18, share: "75.0% of chapter" }
+        ]},
+        { name: "Diseases of the digestive system", code: "K00–K93", deaths: 15, pct: 3.1, detail: [
+          { name: "Diseases of liver (K70–K77)", deaths: 7, share: "46.7% of chapter" }
+        ]},
+        { name: "External causes of morbidity and mortality", code: "V01–Y98", deaths: 14, pct: 2.9, detail: [
+          { name: "Transport accidents (V01–V99)", deaths: 5, share: "35.7% of chapter" },
+          { name: "Accidental exposure to unspecified factors (X58–X59)", deaths: 4, share: "28.6% of chapter" }
+        ]},
+        { name: "Diseases of the nervous system", code: "G00–G99", deaths: 13, pct: 2.7, detail: [
+          { name: "Other disorders of the nervous system (G90–G99)", deaths: 5, share: "38.5% of chapter" }
+        ]},
+        { name: "Remainder of other chapters", code: "Other", deaths: 25, pct: 5.2, detail: [
+          { name: "Skin, perinatal, musculoskeletal, blood, congenital, mental", deaths: 25, share: "5.2% of all deaths" }
+        ]}
+      ],
+      sex: {
+        male: {
+          total: 294,
+          top: [
+            { name: "Circulatory system", deaths: 88, pct: 29.9 },
+            { name: "Endocrine / nutritional / metabolic", deaths: 49, pct: 16.7 },
+            { name: "Ill-defined causes", deaths: 32, pct: 10.9 },
+            { name: "Infectious & parasitic", deaths: 25, pct: 8.5 },
+            { name: "Neoplasms", deaths: 25, pct: 8.5 },
+            { name: "Respiratory system", deaths: 20, pct: 6.8 }
+          ]
+        },
+        female: {
+          total: 190,
+          top: [
+            { name: "Circulatory system", deaths: 37, pct: 19.5 },
+            { name: "Neoplasms", deaths: 37, pct: 19.5 },
+            { name: "Endocrine / nutritional / metabolic", deaths: 34, pct: 17.9 },
+            { name: "Infectious & parasitic", deaths: 20, pct: 10.5 },
+            { name: "Ill-defined causes", deaths: 15, pct: 7.9 },
+            { name: "Respiratory system", deaths: 11, pct: 5.8 }
+          ]
+        }
+      },
+      months: [
+        { label: "Jan", deaths: 33 },
+        { label: "Feb", deaths: 39 },
+        { label: "Mar", deaths: 33 },
+        { label: "Apr", deaths: 61 },
+        { label: "May", deaths: 54 },
+        { label: "Jun", deaths: 53 },
+        { label: "Jul", deaths: 42 },
+        { label: "Aug", deaths: 36 },
+        { label: "Sep", deaths: 32 },
+        { label: "Oct", deaths: 43 },
+        { label: "Nov", deaths: 34 },
+        { label: "Dec", deaths: 24 }
+      ],
+      places: [
+        {
+          id: "hospital",
+          label: "Hospital",
+          deaths: 253,
+          pct: 52.3,
+          note: "Most recorded deaths occurred in hospital settings, reflecting certification pathways through Vanuatu National Hospital."
+        },
+        {
+          id: "home",
+          label: "Home",
+          deaths: 130,
+          pct: 26.9,
+          note: "A substantial share of deaths occurred at home, highlighting the need to strengthen community death notification and certification."
+        },
+        {
+          id: "other",
+          label: "Other",
+          deaths: 101,
+          pct: 20.9,
+          note: "Other locations include settings outside hospital and home. Strengthening notification outside facilities remains a priority."
+        }
+      ]
+    };
+
+    const state = {
+      view: "overview",
+      causeLimit: 4,
+      expandedCause: null,
+      sexFilter: "both",
+      selectedPlace: "hospital",
+      selectedMonth: null
+    };
+
+    const $ = (sel, root = document) => root.querySelector(sel);
+    const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
+
+    function setView(view) {
+      state.view = view;
+      $$(".tab").forEach((tab) => {
+        const on = tab.dataset.view === view;
+        tab.setAttribute("aria-selected", String(on));
+      });
+      $$(".view").forEach((panel) => {
+        const on = panel.id === `view-${view}`;
+        panel.classList.toggle("active", on);
+        panel.hidden = !on;
+      });
+      if (view === "monthly") drawMonthChart();
+      if (view === "sex") renderSex();
+      if (view === "causes") renderCauses();
+      if (view === "place") renderPlaces();
+      if (view === "overview") renderOverview();
+    }
+
+    function causeSlice() {
+      if (state.causeLimit === "all") return DATA.causes;
+      return DATA.causes.slice(0, Number(state.causeLimit));
+    }
+
+    function renderCauseList(target, items, { expandable = true } = {}) {
+      const max = Math.max(...DATA.causes.map((c) => c.deaths));
+      target.innerHTML = items.map((cause, i) => {
+        const color = DATA.colors[DATA.causes.indexOf(cause)] || DATA.colors[i % DATA.colors.length];
+        const width = (cause.deaths / max) * 100;
+        const expanded = expandable && state.expandedCause === cause.code;
+        const details = (cause.detail || [])
+          .map((d) => `<div class="subcause"><span>${d.name}</span><span>${d.deaths} · ${d.share}</span></div>`)
+          .join("");
+        return `
+          <div class="cause" role="button" tabindex="0"
+               data-code="${cause.code}"
+               aria-expanded="${expanded}"
+               ${expandable ? "" : 'data-goto="causes"'}>
+            <div class="cause-head">
+              <span>${cause.name} <span style="color:var(--muted);font-weight:600">(${cause.code})</span></span>
+              <span class="cause-meta">${cause.deaths} (${cause.pct}%)</span>
+            </div>
+            <div class="bar-track"><div class="bar-fill" style="width:${width}%;background:${color}"></div></div>
+            ${expandable ? `<div class="cause-details">${details || "<div class='subcause'><span>No subcategory breakdown listed.</span><span></span></div>"}</div>` : ""}
+          </div>`;
+      }).join("");
+
+      // trigger bar animation on next frame
+      requestAnimationFrame(() => {
+        $$(".bar-fill", target).forEach((el) => {
+          const w = el.style.width;
+          el.style.width = "0";
+          requestAnimationFrame(() => { el.style.width = w; });
+        });
+      });
+    }
+
+    function renderOverview() {
+      renderCauseList($("#overview-causes"), DATA.causes.slice(0, 4), { expandable: false });
+      $$("#overview-causes .cause").forEach((el) => {
+        el.addEventListener("click", () => {
+          state.expandedCause = el.dataset.code;
+          setView("causes");
+        });
+        el.addEventListener("keydown", (e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            state.expandedCause = el.dataset.code;
+            setView("causes");
+          }
+        });
+      });
+    }
+
+    function renderCauses() {
+      const items = causeSlice();
+      renderCauseList($("#causes-list"), items, { expandable: true });
+      const shown = items.reduce((s, c) => s + c.deaths, 0);
+      const pct = ((shown / DATA.total) * 100).toFixed(1);
+      $("#causes-callout").innerHTML =
+        state.causeLimit === 4
+          ? `Top 4 causes account for <strong>${shown} deaths (${pct}%)</strong> of 484 analysed deaths.`
+          : state.causeLimit === 10
+            ? `Top 10 causes accounted for <strong>459 deaths (94.8%)</strong> of 484 analysed deaths.`
+            : `All listed chapter groups total <strong>${DATA.total} deaths (100%)</strong>.`;
+
+      $$("#causes-list .cause").forEach((el) => {
+        const toggle = () => {
+          state.expandedCause = state.expandedCause === el.dataset.code ? null : el.dataset.code;
+          renderCauses();
+        };
+        el.addEventListener("click", toggle);
+        el.addEventListener("keydown", (e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            toggle();
+          }
+        });
+      });
+    }
+
+    function renderSex() {
+      const filter = state.sexFilter;
+      const cards = [];
+      if (filter === "both" || filter === "male") cards.push(sexCard("male", DATA.sex.male));
+      if (filter === "both" || filter === "female") cards.push(sexCard("female", DATA.sex.female));
+      $("#sex-cols").innerHTML = cards.join("");
+      requestAnimationFrame(() => {
+        $$(".mini-fill").forEach((el) => {
+          const w = el.dataset.w;
+          el.style.width = "0";
+          requestAnimationFrame(() => { el.style.width = w; });
+        });
+      });
+    }
+
+    function sexCard(key, data) {
+      const title = key === "male" ? "Male" : "Female";
+      const rows = data.top.slice(0, 5).map((row) => `
+        <div class="mini-row">
+          <span>${row.name}</span>
+          <span>${row.deaths} (${row.pct}%)</span>
+          <div class="mini-track"><div class="mini-fill" data-w="${(row.pct / 30) * 100}%"></div></div>
+        </div>`).join("");
+      return `
+        <article class="sex-card ${key}">
+          <h3>${title}</h3>
+          <p class="sex-total">${data.total} deaths · top 5 shown</p>
+          ${rows}
+        </article>`;
+    }
+
+    function drawMonthChart() {
+      const svg = $("#month-chart");
+      const months = DATA.months;
+      const max = Math.max(...months.map((m) => m.deaths));
+      const pad = { t: 24, r: 16, b: 36, l: 36 };
+      const w = 640;
+      const h = 260;
+      const innerW = w - pad.l - pad.r;
+      const innerH = h - pad.t - pad.b;
+      const gap = 10;
+      const barW = (innerW - gap * (months.length - 1)) / months.length;
+
+      const bars = months.map((m, i) => {
+        const x = pad.l + i * (barW + gap);
+        const bh = (m.deaths / max) * innerH;
+        const y = pad.t + innerH - bh;
+        const active = state.selectedMonth === m.label ? " active" : "";
+        return `<rect class="chart-bar${active}" data-label="${m.label}" data-deaths="${m.deaths}" x="${x}" y="${y}" width="${barW}" height="${bh}" rx="4"></rect>
+          <text class="chart-axis" x="${x + barW / 2}" y="${h - 12}" text-anchor="middle">${m.label}</text>`;
+      }).join("");
+
+      const yTicks = [0, 20, 40, 60].map((v) => {
+        const y = pad.t + innerH - (v / max) * innerH;
+        return `<text class="chart-axis" x="${pad.l - 8}" y="${y + 4}" text-anchor="end">${v}</text>
+          <line x1="${pad.l}" y1="${y}" x2="${w - pad.r}" y2="${y}" stroke="#e2e8f0" stroke-width="1"/>`;
+      }).join("");
+
+      svg.innerHTML = `${yTicks}${bars}`;
+
+      const tooltip = $("#month-tooltip");
+      const wrap = $("#month-chart-wrap");
+      const summary = $("#month-summary");
+
+      $$(".chart-bar", svg).forEach((bar) => {
+        const show = (e) => {
+          const label = bar.dataset.label;
+          const deaths = bar.dataset.deaths;
+          state.selectedMonth = label;
+          $$(".chart-bar", svg).forEach((b) => b.classList.toggle("active", b === bar));
+          tooltip.textContent = `${label} 2023: ${deaths} deaths`;
+          tooltip.classList.add("show");
+          summary.textContent = `${label}: ${deaths} deaths`;
+          const rect = bar.getBoundingClientRect();
+          const wrapRect = wrap.getBoundingClientRect();
+          tooltip.style.left = `${rect.left - wrapRect.left + rect.width / 2}px`;
+          tooltip.style.top = `${rect.top - wrapRect.top}px`;
+        };
+        bar.addEventListener("mouseenter", show);
+        bar.addEventListener("focus", show);
+        bar.addEventListener("click", show);
+        bar.setAttribute("tabindex", "0");
+        bar.setAttribute("role", "button");
+        bar.setAttribute("aria-label", `${bar.dataset.label}: ${bar.dataset.deaths} deaths`);
+      });
+
+      svg.addEventListener("mouseleave", () => {
+        tooltip.classList.remove("show");
+      });
+    }
+
+    function renderPlaces() {
+      $("#places").innerHTML = DATA.places.map((p) => `
+        <button class="place" type="button" data-place="${p.id}" aria-pressed="${state.selectedPlace === p.id}">
+          <p class="place-label">${p.label}</p>
+          <p class="place-value">${p.deaths} (${p.pct}%)</p>
+        </button>`).join("");
+
+      const selected = DATA.places.find((p) => p.id === state.selectedPlace) || DATA.places[0];
+      $("#place-detail").innerHTML = `<strong>${selected.label}:</strong> ${selected.deaths} deaths (${selected.pct}%). ${selected.note}`;
+
+      $$("#places .place").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          state.selectedPlace = btn.dataset.place;
+          renderPlaces();
+        });
+      });
+    }
+
+    // Tab clicks
+    $$(".tab").forEach((tab) => {
+      tab.addEventListener("click", () => setView(tab.dataset.view));
+    });
+
+    $$("[data-goto]").forEach((btn) => {
+      btn.addEventListener("click", () => setView(btn.dataset.goto));
+    });
+
+    // Cause limit chips
+    $$("[data-cause-limit]").forEach((chip) => {
+      chip.addEventListener("click", () => {
+        state.causeLimit = chip.dataset.causeLimit === "all" ? "all" : chip.dataset.causeLimit;
+        $$("[data-cause-limit]").forEach((c) => {
+          const on = c === chip;
+          c.classList.toggle("active", on);
+          c.setAttribute("aria-pressed", String(on));
+        });
+        renderCauses();
+      });
+    });
+
+    // Sex filter chips
+    $$("[data-sex]").forEach((chip) => {
+      chip.addEventListener("click", () => {
+        state.sexFilter = chip.dataset.sex;
+        $$("[data-sex]").forEach((c) => {
+          const on = c === chip;
+          c.classList.toggle("active", on);
+          c.setAttribute("aria-pressed", String(on));
+        });
+        renderSex();
+      });
+    });
+
+    // Init
+    renderOverview();
+    renderCauses();
+    renderSex();
+    renderPlaces();
+  </script>
 </body>
 </html>
