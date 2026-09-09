@@ -658,8 +658,37 @@ body {
   font-size: 0.75rem;
   color: var(--muted);
   text-align: center;
-  margin-bottom: 1.2rem;
+  margin-bottom: 1rem;
   padding: 0 0.5rem;
+}
+
+.footer-logos {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 1.25rem 2rem;
+  margin: 0 0 1.35rem;
+  padding: 0 0.5rem;
+  background: transparent;
+}
+
+.footer-logos img {
+  height: 48px;
+  width: auto;
+  max-width: min(280px, 100%);
+  object-fit: contain;
+  background: transparent;
+}
+
+@media (max-width: 560px) {
+  .footer-logos {
+    gap: 0.9rem 1.25rem;
+  }
+
+  .footer-logos img {
+    height: 40px;
+  }
 }
 
 .pacific-border {
