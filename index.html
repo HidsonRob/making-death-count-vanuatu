@@ -158,7 +158,7 @@
   <div class="pacific-border" aria-hidden="true"></div>
 
   <script>
-    const DATA = {
+    const FALLBACK_DATA = {
       total: 484,
       colors: ["#e53935", "#43a047", "#f9a825", "#00acc1", "#1a3a6b", "#8e24aa", "#fb8c00", "#3949ab", "#00897b", "#6d4c41", "#78909c"],
       causes: [
@@ -300,6 +300,9 @@
         }
       ]
     };
+
+    const API_DATASET_URL = "/api/dataset/2023";
+    let DATA = FALLBACK_DATA;
 
     const state = {
       view: "overview",
@@ -557,11 +560,28 @@
       });
     });
 
-    // Init
-    renderOverview();
-    renderCauses();
-    renderSex();
-    renderPlaces();
+    function renderAll() {
+      renderOverview();
+      renderCauses();
+      renderSex();
+      renderPlaces();
+    }
+
+    async function loadData() {
+      try {
+        const res = await fetch(API_DATASET_URL);
+        if (!res.ok) throw new Error("API unavailable");
+        const payload = await res.json();
+        if (payload && Array.isArray(payload.causes) && payload.causes.length) {
+          DATA = payload;
+        }
+      } catch {
+        DATA = FALLBACK_DATA;
+      }
+      renderAll();
+    }
+
+    loadData();
 
     if ("serviceWorker" in navigator && location.protocol.startsWith("http")) {
       navigator.serviceWorker.register("./sw.js");
